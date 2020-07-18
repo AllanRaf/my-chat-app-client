@@ -6,6 +6,7 @@ export function HomePage() {
     <main>
       <div class="main-page">
         <h1 class="main-header">Hello to Allan's Chat Universe</h1>
+        <h2>Work in progress</h2>
         <img
           class="main-image"
           width="300px"
