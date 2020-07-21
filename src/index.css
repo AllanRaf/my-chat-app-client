@@ -45,3 +45,23 @@ code {
   font-weight: bold;
   color: darkblue;
 }
+
+.sign-up {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.signup-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.sign-up-input {
+  margin-top: 20px;
+  color: blue;
+}
+
+.signup-button {
+  margin-top: 20px;
+}

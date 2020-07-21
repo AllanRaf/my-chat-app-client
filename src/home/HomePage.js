@@ -1,5 +1,6 @@
 import React from "react";
 import Button from "@material-ui/core/Button";
+import { Link } from "react-router-dom";
 
 export function HomePage() {
   return (
@@ -23,7 +24,13 @@ export function HomePage() {
         </Button>
         <div className="main-secondary-text">
           <p>
-            New user? <text className="main-sign-in">sign in</text>
+            New user?
+            <Link to="/signup">
+              {" "}
+              <button>
+                <text className="main-sign-in">sign up</text>
+              </button>
+            </Link>
           </p>
         </div>
       </div>
