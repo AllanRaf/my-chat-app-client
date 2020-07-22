@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import * as request from "superagent";
+
+const url = process.env.REACT_APP_CHATAPP_SERVER_URL || "http://localhost:5000";
 
 export const SignUpPage = () => {
   const [username, setUsername] = useState("");
@@ -7,6 +10,13 @@ export const SignUpPage = () => {
   const onSubmit = (event) => {
     event.preventDefault();
     console.log("submitting credentials", username, password);
+    request
+      .post(`${url}/user`)
+      .send({ email: username, password })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((error) => console.log("got an error", error));
   };
 
   const onChangeEmail = (event) => {
