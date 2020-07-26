@@ -1,12 +1,21 @@
 import React, { useEffect, useState } from "react";
 import * as request from "superagent";
+import io from "socket.io-client";
 
 const url = process.env.REACT_APP_CHATAPP_SERVER_URL || "http://localhost:5000";
 
 export const ChatRoomPage = () => {
-  const [messages, setMessages] = useState([]);
-  const [newMessage, setNewMessage] = useState({});
   const token = localStorage.getItem("token");
+  const socket = io.connect(`${url}`, {
+    query: {
+      token: token,
+    },
+  });
+  const [messages, setMessages] = useState(["hello"]);
+  const [newMessage, setNewMessage] = useState({});
+
+  const [messagesAppended, setMessagesAppended] = useState([]);
+
   const auth = token ? `Bearer ${token}` : undefined;
 
   useEffect(() => {
@@ -20,8 +29,29 @@ export const ChatRoomPage = () => {
         console.log("error fetching messages");
       });
 
-    console.log("token saved", localStorage.getItem("token"));
+    socket.on("chatmessage", (msg) => {
+      console.log("msg", msg);
+      addMessage(msg);
+      //const newMessage = { username: "Richie", message: msg.message.message };
+      //setMessages(() => messages.concat(newMessage));
+    });
+
+    return () => {
+      socket.emit("disconnect");
+      socket.off();
+    };
   }, []);
+
+  const addMessage = (msg) => {
+    const messageToAppend = {
+      id: msg.id,
+      username: msg.username,
+      message: msg.message.message,
+    };
+    console.log("messageToAppend", messageToAppend);
+    const newMessagesAppended = messagesAppended.concat(messageToAppend);
+    setMessagesAppended(newMessagesAppended);
+  };
 
   const onSubmit = (event) => {
     event.preventDefault();
@@ -33,11 +63,12 @@ export const ChatRoomPage = () => {
       .catch((error) => {
         console.log("error fetching messages");
       });
+    console.log("the messages are", messages);
+    socket.emit("chatmessage", { username: "Ritchie", message: newMessage });
   };
 
   const onChange = (event) => {
     setNewMessage({ message: event.target.value });
-    console.log("new message", newMessage);
   };
   return (
     <div>
@@ -46,7 +77,7 @@ export const ChatRoomPage = () => {
         {messages.length > 0 ? (
           messages.map((message) => {
             return (
-              <div key={message.id.toString()}>
+              <div>
                 {message.username}: {message.message}
               </div>
             );
@@ -54,6 +85,15 @@ export const ChatRoomPage = () => {
         ) : (
           <div>No messages</div>
         )}
+        {messagesAppended.length > 0
+          ? messagesAppended.map((message) => {
+              return (
+                <div>
+                  {message.username}: {message.message}
+                </div>
+              );
+            })
+          : null}
         <form className="signup-form" onSubmit={onSubmit}>
           <input
             className="sign-up-input"
