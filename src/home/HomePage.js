@@ -24,7 +24,7 @@ export function HomePage({ history }) {
 
   const onSubmit = (event) => {
     event.preventDefault();
-    console.log("submitting credentials", username, password);
+
     request
       .post(`${url}/login`)
       .send({ email: username, password })
