@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import * as request from "superagent";
 //import io from "socket.io-client";
 import { url } from "../App";
@@ -15,11 +15,11 @@ export const ChatRoomPage = () => {
   const [messages, setMessages] = useState(["hello"]);
   const [newMessage, setNewMessage] = useState({});
 
-  const [messagesAppended, setMessagesAppended] = useState([]);
+  //const [messagesAppended, setMessagesAppended] = useState([]);
 
   const auth = token ? `Bearer ${token}` : undefined;
 
-  useEffect(() => {
+  /* useEffect(() => {
     request
       .get(`${url}/messages`)
       .set("Authorization", auth)
@@ -30,18 +30,18 @@ export const ChatRoomPage = () => {
         console.log("error fetching messages");
       });
 
-    /*     socket.on("chatmessage", (msg) => {
+        socket.on("chatmessage", (msg) => {
       console.log("msg", msg);
       addMessage(msg);
       //const newMessage = { username: "Richie", message: msg.message.message };
       //setMessages(() => messages.concat(newMessage));
     }); */
 
-    /*     return () => {
+  /*     return () => {
       socket.emit("disconnect");
       socket.off();
-    }; */
-  }, []);
+    }; 
+  }, []);error Command failed with exit code 1.
 
   /*   const addMessage = (msg) => {
     const messageToAppend = {
