@@ -6,6 +6,8 @@ import { ChatRoomPage } from "./rooms/ChatRoomPage";
 import { createBrowserHistory as history } from "history";
 import "./App.css";
 
+const URL = "https://allanschat.herokuapp.com/";
+
 function App() {
   return (
     <div className="App">

@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import * as request from "superagent";
 import { Link } from "react-router-dom";
+import { url } from "../App";
 
-const url = process.env.REACT_APP_CHATAPP_SERVER_URL || "http://localhost:5000";
-
-//
+//process.env.REACT_APP_CHATAPP_SERVER_URL || "http://localhost:5000";
 
 export function HomePage({ history }) {
   const [username, setUsername] = useState("");
@@ -27,7 +26,7 @@ export function HomePage({ history }) {
 
   const onSubmit = (event) => {
     event.preventDefault();
-    console.log("submitting credentials", username, password, url);
+    console.log("submitting credentials", username, password);
     request
       .post(`${url}/login`)
       .send({ email: username, password })

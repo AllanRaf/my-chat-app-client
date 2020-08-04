@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import * as request from "superagent";
-import io from "socket.io-client";
+//import io from "socket.io-client";
+import { url } from "../App";
 
-const url = process.env.REACT_APP_CHATAPP_SERVER_URL || "http://localhost:5000";
+//process.env.REACT_APP_CHATAPP_SERVER_URL || "http://localhost:5000";
 
 export const ChatRoomPage = () => {
   const token = localStorage.getItem("token");
