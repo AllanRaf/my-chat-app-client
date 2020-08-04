@@ -86,7 +86,7 @@ export const ChatRoomPage = () => {
         ) : (
           <div>No messages</div>
         )}
-        {messagesAppended.length > 0
+        {/*         {messagesAppended.length > 0
           ? messagesAppended.map((message) => {
               return (
                 <div>
@@ -94,7 +94,7 @@ export const ChatRoomPage = () => {
                 </div>
               );
             })
-          : null}
+          : null} */}
         <form className="signup-form" onSubmit={onSubmit}>
           <input
             className="sign-up-input"
