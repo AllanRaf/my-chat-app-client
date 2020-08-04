@@ -6,7 +6,8 @@ import { ChatRoomPage } from "./rooms/ChatRoomPage";
 import { createBrowserHistory as history } from "history";
 import "./App.css";
 
-export const url = "https://allanschat.herokuapp.com";
+export const url =
+  process.env.REACT_APP_CHATAPP_SERVER_URL || "http://localhost:5000";
 
 function App() {
   return (

@@ -3,8 +3,6 @@ import * as request from "superagent";
 import { Link } from "react-router-dom";
 import { url } from "../App";
 
-//process.env.REACT_APP_CHATAPP_SERVER_URL || "http://localhost:5000";
-
 export function HomePage({ history }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");

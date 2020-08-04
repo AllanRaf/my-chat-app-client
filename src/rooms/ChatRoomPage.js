@@ -1,17 +1,11 @@
 import React, { useState, useEffect } from "react";
 import * as request from "superagent";
-//import io from "socket.io-client";
+import io from "socket.io-client";
 import { url } from "../App";
-
-//process.env.REACT_APP_CHATAPP_SERVER_URL || "http://localhost:5000";
 
 export const ChatRoomPage = () => {
   const token = localStorage.getItem("token");
-  /*   const socket = io.connect(`${url}`, {
-    query: {
-      token: token,
-    }, 
-  });*/
+  const socket = io.connect(`${url}`);
   const [messages, setMessages] = useState(["hello"]);
   const [newMessage, setNewMessage] = useState({});
 
@@ -30,19 +24,20 @@ export const ChatRoomPage = () => {
         console.log("error fetching messages");
       });
 
-    // socket.on("chatmessage", (msg) => {
-    //console.log("msg", msg);
-    //addMessage(msg);
-    //const newMessage = { username: "Richie", message: msg.message.message };
+    socket.on("chatmessage", (msg) => {
+      console.log("msg", msg);
+
+      addMessage(msg);
+    });
     //setMessages(() => messages.concat(newMessage));
 
-    /*     return () => {
+    return () => {
       socket.emit("disconnect");
       socket.off();
-    }; */
+    };
   }, []);
 
-  /*   const addMessage = (msg) => {
+  const addMessage = (msg) => {
     const messageToAppend = {
       id: msg.id,
       username: msg.username,
@@ -51,7 +46,7 @@ export const ChatRoomPage = () => {
     console.log("messageToAppend", messageToAppend);
     const newMessagesAppended = messagesAppended.concat(messageToAppend);
     setMessagesAppended(newMessagesAppended);
-  }; */
+  };
 
   const onSubmit = (event) => {
     event.preventDefault();
@@ -64,7 +59,7 @@ export const ChatRoomPage = () => {
         console.log("error fetching messages");
       });
 
-    //socket.emit("chatmessage", { username: "Ritchie", message: newMessage });
+    socket.emit("chatmessage", { message: newMessage });
   };
 
   const onChange = (event) => {
@@ -85,7 +80,7 @@ export const ChatRoomPage = () => {
         ) : (
           <div>No messages</div>
         )}
-        {/*         {messagesAppended.length > 0
+        {messagesAppended.length > 0
           ? messagesAppended.map((message) => {
               return (
                 <div>
@@ -93,7 +88,7 @@ export const ChatRoomPage = () => {
                 </div>
               );
             })
-          : null} */}
+          : null}
         <form className="signup-form" onSubmit={onSubmit}>
           <input
             className="sign-up-input"
