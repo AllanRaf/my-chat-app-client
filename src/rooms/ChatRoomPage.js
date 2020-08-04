@@ -19,7 +19,7 @@ export const ChatRoomPage = () => {
 
   const auth = token ? `Bearer ${token}` : undefined;
 
-  /* useEffect(() => {
+  useEffect(() => {
     request
       .get(`${url}/messages`)
       .set("Authorization", auth)
@@ -35,7 +35,7 @@ export const ChatRoomPage = () => {
       addMessage(msg);
       //const newMessage = { username: "Richie", message: msg.message.message };
       //setMessages(() => messages.concat(newMessage));
-    }); */
+    });
 
   /*     return () => {
       socket.emit("disconnect");
