@@ -6,11 +6,11 @@ const url = process.env.REACT_APP_CHATAPP_SERVER_URL || "http://localhost:5000";
 
 export const ChatRoomPage = () => {
   const token = localStorage.getItem("token");
-  const socket = io.connect(`${url}`, {
+  /*   const socket = io.connect(`${url}`, {
     query: {
       token: token,
-    },
-  });
+    }, 
+  });*/
   const [messages, setMessages] = useState(["hello"]);
   const [newMessage, setNewMessage] = useState({});
 
@@ -29,17 +29,17 @@ export const ChatRoomPage = () => {
         console.log("error fetching messages");
       });
 
-    socket.on("chatmessage", (msg) => {
+    /*     socket.on("chatmessage", (msg) => {
       console.log("msg", msg);
       addMessage(msg);
       //const newMessage = { username: "Richie", message: msg.message.message };
       //setMessages(() => messages.concat(newMessage));
-    });
+    }); */
 
-    return () => {
+    /*     return () => {
       socket.emit("disconnect");
       socket.off();
-    };
+    }; */
   }, []);
 
   const addMessage = (msg) => {
@@ -64,7 +64,7 @@ export const ChatRoomPage = () => {
         console.log("error fetching messages");
       });
     console.log("the messages are", messages);
-    socket.emit("chatmessage", { username: "Ritchie", message: newMessage });
+    //socket.emit("chatmessage", { username: "Ritchie", message: newMessage });
   };
 
   const onChange = (event) => {

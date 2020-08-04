@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import * as request from "superagent";
 
 const url = process.env.REACT_APP_CHATAPP_SERVER_URL || "http://localhost:5000";
-
+//
 export const SignUpPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -12,7 +12,7 @@ export const SignUpPage = () => {
     console.log("submitting credentials", username, password);
     request
       .post(`${url}/user`)
-      .send({ email: username, password })
+      .send({ email: username, password: password })
       .then((res) => {
         console.log(res);
       })

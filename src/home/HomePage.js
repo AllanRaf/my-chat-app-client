@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 
 const url = process.env.REACT_APP_CHATAPP_SERVER_URL || "http://localhost:5000";
 
+//
+
 export function HomePage({ history }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -25,7 +27,7 @@ export function HomePage({ history }) {
 
   const onSubmit = (event) => {
     event.preventDefault();
-    console.log("submitting credentials", username, password);
+    console.log("submitting credentials", username, password, url);
     request
       .post(`${url}/login`)
       .send({ email: username, password })
