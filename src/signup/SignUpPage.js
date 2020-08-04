@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import * as request from "superagent";
-
-const url = process.env.REACT_APP_CHATAPP_SERVER_URL || "http://localhost:5000";
+import { url } from "../App";
 //
 export const SignUpPage = () => {
   const [username, setUsername] = useState("");
