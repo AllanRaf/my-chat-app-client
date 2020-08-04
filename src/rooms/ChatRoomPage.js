@@ -43,7 +43,7 @@ export const ChatRoomPage = () => {
     }; */
   }, []);
 
-  const addMessage = (msg) => {
+  /*   const addMessage = (msg) => {
     const messageToAppend = {
       id: msg.id,
       username: msg.username,
@@ -52,7 +52,7 @@ export const ChatRoomPage = () => {
     console.log("messageToAppend", messageToAppend);
     const newMessagesAppended = messagesAppended.concat(messageToAppend);
     setMessagesAppended(newMessagesAppended);
-  };
+  }; */
 
   const onSubmit = (event) => {
     event.preventDefault();
