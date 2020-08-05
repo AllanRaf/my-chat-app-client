@@ -35,17 +35,15 @@ export const ChatRoomPage = () => {
     };
   }, []);
 
+  useEffect(() => {
+    console.log("new message arrived");
+  }, [messagesAppended]);
+
   const addMessage = (msg) => {
     console.log("message returne", msg);
-    const messageToAppend = {
-      id: msg.id,
-      username: msg.username,
-      message: msg.message,
-    };
-    const newMessagesAppended = messagesAppended;
-    newMessagesAppended.push(messageToAppend);
-    console.log("newMessagesAppended", newMessagesAppended);
-    setMessagesAppended(newMessagesAppended);
+
+    setMessagesAppended([...messagesAppended, msg]);
+    console.log("useState", messagesAppended);
   };
 
   const onSubmit = (event) => {
