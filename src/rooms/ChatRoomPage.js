@@ -25,7 +25,6 @@ export const ChatRoomPage = () => {
       });
 
     socket.on("chatmessage", (msg) => {
-      console.log("msg", msg);
       addMessage(msg);
     });
     //setMessages(() => messages.concat(newMessage));
@@ -37,13 +36,15 @@ export const ChatRoomPage = () => {
   }, []);
 
   const addMessage = (msg) => {
+    console.log("message returne", msg);
     const messageToAppend = {
       id: msg.id,
       username: msg.username,
-      message: msg.message.message,
+      message: msg.message,
     };
-
-    const newMessagesAppended = messagesAppended.concat(messageToAppend);
+    const newMessagesAppended = messagesAppended;
+    newMessagesAppended.push(messageToAppend);
+    console.log("newMessagesAppended", newMessagesAppended);
     setMessagesAppended(newMessagesAppended);
   };
 
@@ -82,7 +83,7 @@ export const ChatRoomPage = () => {
         {messagesAppended.length > 0
           ? messagesAppended.map((message) => {
               return (
-                <div>
+                <div key={message.id}>
                   {message.username}: {message.message}
                 </div>
               );
