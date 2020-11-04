@@ -72,7 +72,7 @@ export const Lobby = () => {
       </form>
       {chatrooms.map((chatroom) => (
         <div>
-          {chatroom.roomName}{" "}
+          Room: {chatroom.roomName} created by:{" "}
           {chatroom.User ? chatroom.User.username : "unknown"}
         </div>
       ))}
