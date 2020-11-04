@@ -40,7 +40,11 @@ export const Lobby = () => {
 
   const addRoom = (newRoom) => {
     console.log("all the chatrooms", chatrooms);
-    setChatrooms((prevRooms) => [...prevRooms, newRoom]);
+    const newRoomParsed = {
+      roomName: newRoom.roomName,
+      User: { username: newRoom.createdBy },
+    };
+    setChatrooms((prevRooms) => [...prevRooms, newRoomParsed]);
   };
   const handleSubmit = (event) => {
     console.log("ref", chatRoom.current);
@@ -70,12 +74,14 @@ export const Lobby = () => {
           <button type="submit">Add a chat room</button>
         </div>
       </form>
-      {chatrooms.map((chatroom) => (
-        <div>
-          Room: {chatroom.roomName} created by:{" "}
-          {chatroom.User ? chatroom.User.username : "unknown"}
-        </div>
-      ))}
+      {chatrooms.map((chatroom) => {
+        return (
+          <div>
+            Room: {chatroom.roomName} created by:
+            {chatroom.User ? chatroom.User.username : "unknown"}
+          </div>
+        );
+      })}
     </div>
   );
 };
