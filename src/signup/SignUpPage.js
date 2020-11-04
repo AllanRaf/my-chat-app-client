@@ -5,13 +5,14 @@ import { url } from "../App";
 export const SignUpPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
 
   const onSubmit = (event) => {
     event.preventDefault();
     console.log("submitting credentials", username, password);
     request
       .post(`${url}/user`)
-      .send({ email: username, password: password })
+      .send({ email, username, password })
       .then((res) => {
         console.log(res);
       })
@@ -19,11 +20,15 @@ export const SignUpPage = () => {
   };
 
   const onChangeEmail = (event) => {
-    setUsername(event.target.value);
+    setEmail(event.target.value);
   };
 
   const onChangePassword = (event) => {
     setPassword(event.target.value);
+  };
+
+  const onChangeUserName = (event) => {
+    setUsername(event.target.value);
   };
 
   return (
@@ -36,6 +41,13 @@ export const SignUpPage = () => {
           type="text"
           onChange={onChangeEmail}
           placeholder="email"
+        />
+        <input
+          className="sign-up-input"
+          name="username"
+          type="text"
+          onChange={onChangeUserName}
+          placeholder="username"
         />
 
         <input

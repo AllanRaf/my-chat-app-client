@@ -32,7 +32,7 @@ export function HomePage({ history }) {
         console.log(res.body);
         localStorage.setItem("name", res.body.name);
         localStorage.setItem("token", res.body.jwt);
-        history.push("/chatroom");
+        history.push("/lobby");
       })
       .catch((error) => {
         setError(true);
