@@ -1,0 +1,12 @@
+.title {
+  color: blue;
+  border: red;
+}
+
+.second-title {
+  border: 1px solid #eee;
+}
+
+.form-add-room {
+  margin-bottom: 10px;
+}

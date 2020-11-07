@@ -2,6 +2,9 @@ import React, { useRef, useEffect, useState } from "react";
 import { url } from "../App";
 import io from "socket.io-client";
 import * as request from "superagent";
+import { Grid, Paper } from "@material-ui/core";
+import "./Lobby.css";
+import "../index.css";
 
 export const Lobby = () => {
   const token = localStorage.getItem("token");
@@ -61,8 +64,9 @@ export const Lobby = () => {
   };
   return (
     <div>
-      <div>This is the Lobby</div>
-      <form onSubmit={handleSubmit}>
+      <h1 className="title">This is the Lobby</h1>
+      <div className="second-title">Add a chat room</div>
+      <form onSubmit={handleSubmit} className="form-add-room">
         <div className="main-page">
           <input
             className="sign-up-input"
@@ -74,14 +78,18 @@ export const Lobby = () => {
           <button type="submit">Add a chat room</button>
         </div>
       </form>
-      {chatrooms.map((chatroom) => {
-        return (
-          <div>
-            Room: {chatroom.roomName} created by:
-            {chatroom.User ? chatroom.User.username : "unknown"}
-          </div>
-        );
-      })}
+      <Grid container spacing={5}>
+        {chatrooms.map((chatroom) => {
+          return (
+            <Grid item xl={3} l={3} m={6} xs={6}>
+              <Paper className="chatroom">
+                Room: {chatroom.roomName} created by:
+                {chatroom.User ? chatroom.User.username : "unknown"}
+              </Paper>
+            </Grid>
+          );
+        })}
+      </Grid>
     </div>
   );
 };

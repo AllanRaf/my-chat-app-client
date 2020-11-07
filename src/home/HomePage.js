@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import * as request from "superagent";
 import { Link } from "react-router-dom";
+import { Button, TextField } from "@material-ui/core";
 import { url } from "../App";
 
 export function HomePage({ history }) {
@@ -44,28 +45,34 @@ export function HomePage({ history }) {
         <h1 className="main-header">Hello to Allan's Chat Universe</h1>
         <h2>Work in progress</h2>
         <form className="signup-form" onSubmit={onSubmit}>
-          <input
-            onFocus={resetError}
-            className="sign-up-input"
-            name="email"
-            type="text"
-            onChange={onChangeEmail}
-            placeholder="email"
-          />
-
-          <input
-            onFocus={resetError}
-            className="sign-up-input"
-            name="password"
-            type="text"
-            onChange={onChangePassword}
-            placeholder="password"
-          />
+          <div className="fields-container">
+            <span className="field-input">
+              <TextField
+                onFocus={resetError}
+                id="outlined-basic"
+                label="email"
+                variant="outlined"
+                name="email"
+                onChange={onChangeEmail}
+              />
+            </span>
+            <span className="field-input">
+              <TextField
+                onFocus={resetError}
+                //id="filled-password-input"
+                label="Password"
+                type="password"
+                onChange={onChangePassword}
+                variant="outlined"
+                className="field-input"
+              />
+            </span>
+          </div>
           {error ? <div>email/password incorrect</div> : null}
 
-          <button className="signup-button" type="Submit">
+          <Button variant="contained" color="primary" type="submit">
             Log In
-          </button>
+          </Button>
         </form>
         <div className="main-secondary-text">
           <p>
