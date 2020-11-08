@@ -2,18 +2,24 @@ import React, { useState, useEffect } from "react";
 import * as request from "superagent";
 import io from "socket.io-client";
 import { url } from "../App";
+import { useLocation } from "react-router-dom";
 
 export const ChatRoomPage = () => {
   const token = localStorage.getItem("token");
-  const socket = io.connect(`${url}`);
+  /*   const socket = io.connect(`${url}`);
   const [messages, setMessages] = useState(["hello"]);
   const [newMessage, setNewMessage] = useState({});
 
-  const [messagesAppended, setMessagesAppended] = useState([]);
+  const [messagesAppended, setMessagesAppended] = useState([]); */
 
   const auth = token ? `Bearer ${token}` : undefined;
 
+  const location = useLocation();
+
   useEffect(() => {
+    console.log("you are in chatroom", location);
+  }, []);
+  /*   useEffect(() => {
     request
       .get(`${url}/messages`)
       .set("Authorization", auth)
@@ -33,7 +39,7 @@ export const ChatRoomPage = () => {
       socket.emit("disconnect");
       socket.off();
     };
-  }, []);
+  }, []); 
 
   useEffect(() => {
     console.log("new message arrived");
@@ -62,11 +68,11 @@ export const ChatRoomPage = () => {
 
   const onChange = (event) => {
     setNewMessage({ message: event.target.value });
-  };
+  };*/
   return (
     <div>
-      <h1>Welcome to the main chat room</h1>
-      <div>
+      <h1>Welcome to room {location.state.roomName}</h1>
+      {/*       <div>
         {messages.length > 0 ? (
           messages.map((message) => {
             return (
@@ -99,7 +105,7 @@ export const ChatRoomPage = () => {
             Post Message
           </button>
         </form>
-      </div>
+      </div> */}
     </div>
   );
 };

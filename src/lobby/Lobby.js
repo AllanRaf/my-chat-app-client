@@ -6,7 +6,7 @@ import { Button, Grid, Paper } from "@material-ui/core";
 import "./Lobby.css";
 import "../index.css";
 
-export const Lobby = () => {
+export const Lobby = ({ history }) => {
   const token = localStorage.getItem("token");
   const socket = io.connect(`${url}`);
   const chatRoom = useRef("");
@@ -65,14 +65,15 @@ export const Lobby = () => {
       });
   };
 
-  const handleOnJoinRoom = (roomId) => {
-    console.log("joining a chat room", roomId);
+  const handleOnJoinRoom = (roomId, roomName) => {
+    console.log("joining room", roomId, roomName);
     request
       .post(`${url}/joinroom`)
       .set("Authorization", auth)
       .send({ roomId })
       .then((res) => {
         console.log("joined room");
+        history.push({ pathname: "/chatroom", state: { roomId, roomName } });
       })
       .catch((error) => {
         console.log("error joining room", error);
@@ -102,7 +103,7 @@ export const Lobby = () => {
               xl={3}
               lg={3}
               sm={3}
-              xs={3}
+              xs={12}
               className="chatroom-container"
             >
               <Paper className="chatroom-container">
@@ -120,7 +121,7 @@ export const Lobby = () => {
                     small
                     className="button-add-room"
                     onClick={() => {
-                      handleOnJoinRoom(chatroom.id);
+                      handleOnJoinRoom(chatroom.id, chatroom.roomName);
                     }}
                   >
                     <span className="button-add-room-text">
