@@ -74,8 +74,9 @@ export const ChatRoomPage = () => {
   };
 
   const handleSubmitMessage = () => {
-    console.log("handling submit message");
+    console.log("handling submit message with roomId", location.state.roomId);
     const messageToSend = message.current;
+
     request
       .post(`${url}/messages/${location.state.roomId}`)
       .set("Authorization", auth)

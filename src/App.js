@@ -7,6 +7,7 @@ import { Lobby } from "./lobby/Lobby";
 import { createBrowserHistory as history } from "history";
 import "./App.css";
 
+//export const url = "http://localhost:5000";
 export const url = "https://allanschat.herokuapp.com";
 //  process.env.REACT_APP_CHATAPP_SERVER_URL || "http://localhost:5000";
 //"https://allanschat.herokuapp.com";

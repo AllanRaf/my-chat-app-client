@@ -42,9 +42,11 @@ export const Lobby = ({ history }) => {
   };
 
   const addRoom = (newRoom) => {
+    console.log("newRoom is", newRoom);
     const newRoomParsed = {
       roomName: newRoom.roomName,
       User: { username: newRoom.createdBy },
+      id: newRoom.roomId,
     };
     setChatrooms((prevRooms) => [...prevRooms, newRoomParsed]);
   };

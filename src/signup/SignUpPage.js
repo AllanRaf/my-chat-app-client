@@ -9,7 +9,7 @@ export const SignUpPage = () => {
 
   const onSubmit = (event) => {
     event.preventDefault();
-    console.log("submitting credentials", username, password);
+    console.log("submitting credentials", email, username, password);
     request
       .post(`${url}/user`)
       .send({ email, username, password })
