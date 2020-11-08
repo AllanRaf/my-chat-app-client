@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import * as request from "superagent";
 import io from "socket.io-client";
 import { url } from "../App";
@@ -7,7 +7,10 @@ import { Button, TextField } from "@material-ui/core";
 
 export const ChatRoomPage = () => {
   const token = localStorage.getItem("token");
-  // const socket = io.connect(`${url}`);
+  const socket = io.connect(`${url}`);
+  const message = useRef("");
+
+  const [chatMessages, setChatMessages] = useState([{}]);
 
   const auth = token ? `Bearer ${token}` : undefined;
 
@@ -25,15 +28,16 @@ export const ChatRoomPage = () => {
         console.log("error fetching messages");
       });
 
-    /*     socket.on("chatmessage", (msg) => {
-      addMessage(msg);
-    }); */
+    socket.on(`${location.state.roomName}`, (msg) => {
+      console.log("new message coming through", msg);
+      setChatMessages((prevMessages) => [...prevMessages, msg]);
+    });
     //setMessages(() => messages.concat(newMessage));
 
-    /*     return () => {
+    return () => {
       socket.emit("disconnect");
       socket.off();
-    }; */
+    };
   }, []);
 
   /* useEffect(() => {
@@ -65,11 +69,17 @@ export const ChatRoomPage = () => {
     setNewMessage({ message: event.target.value });
   };*/
 
+  const onChangeMessage = (event) => {
+    message.current = event.target.value;
+  };
+
   const handleSubmitMessage = () => {
     console.log("handling submit message");
+    const messageToSend = message.current;
     request
       .post(`${url}/messages/${location.state.roomId}`)
       .set("Authorization", auth)
+      .send({ messageToSend, roomName: location.state.roomName })
       .then((res) => {
         console.log("fetching messages", res);
         //setMessages(res.body);
@@ -78,9 +88,27 @@ export const ChatRoomPage = () => {
         console.log("error fetching messages");
       });
   };
+
   return (
     <div>
       <h1>Welcome to room {location.state.roomName}</h1>
+      <TextField
+        id="outlined-basic"
+        label="message"
+        variant="outlined"
+        name="message"
+        onChange={onChangeMessage}
+      />
+      <div>
+        {chatMessages.map((message) => {
+          return (
+            <div>
+              <span>{message.username}</span>
+              <span>{message.message}</span>
+            </div>
+          );
+        })}
+      </div>
 
       <Button
         variant="contained"
@@ -88,7 +116,7 @@ export const ChatRoomPage = () => {
         type="submit"
         onClick={handleSubmitMessage}
       >
-        Log In
+        Post Message
       </Button>
       {/*       <div>
         {messages.length > 0 ? (
