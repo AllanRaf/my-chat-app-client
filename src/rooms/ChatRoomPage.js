@@ -10,7 +10,7 @@ export const ChatRoomPage = () => {
   const socket = io.connect(`${url}`);
   const message = useRef("");
 
-  const [chatMessages, setChatMessages] = useState([{}]);
+  const [chatMessages, setChatMessages] = useState([]);
 
   const auth = token ? `Bearer ${token}` : undefined;
 
@@ -103,7 +103,7 @@ export const ChatRoomPage = () => {
         {chatMessages.map((message) => {
           return (
             <div>
-              <span>{message.username}</span>
+              <span>{message.username}: </span>
               <span>{message.message}</span>
             </div>
           );
