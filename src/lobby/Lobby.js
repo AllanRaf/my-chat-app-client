@@ -25,16 +25,16 @@ export const Lobby = ({ history }) => {
         console.log("error fetching chatrooms");
       });
 
-    socket.on("chatrooms", (rooms) => {
+    /*     socket.on("chatrooms", (rooms) => {
       console.log("chatrooms", rooms);
 
       addRoom(rooms);
-    });
+    }); 
 
     return () => {
       socket.emit("disconnect");
       socket.off();
-    };
+    };*/
   }, []);
 
   const onChange = (event) => {

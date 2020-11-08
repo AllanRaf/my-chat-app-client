@@ -1,0 +1,15 @@
+container {
+  display: flex;
+  justify-content: flex-start;
+  width: 80%;
+}
+
+master {
+  width: 100%;
+}
+
+message-container {
+  display: flex;
+  width: 15rem;
+  align-items: flex-start;
+}

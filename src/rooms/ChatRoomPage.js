@@ -4,6 +4,7 @@ import io from "socket.io-client";
 import { url } from "../App";
 import { useLocation } from "react-router-dom";
 import { Button, TextField } from "@material-ui/core";
+import "./ChatRoomPage.css";
 
 export const ChatRoomPage = () => {
   const token = localStorage.getItem("token");
@@ -21,8 +22,8 @@ export const ChatRoomPage = () => {
       .get(`${url}/messages/${location.state.roomId}`)
       .set("Authorization", auth)
       .then((res) => {
-        console.log("fetching messages");
-        //setMessages(res.body);
+        console.log("fetching messages", res);
+        // setMessages(res.body);
       })
       .catch((error) => {
         console.log("error fetching messages");
@@ -39,35 +40,6 @@ export const ChatRoomPage = () => {
       socket.off();
     };
   }, []);
-
-  /* useEffect(() => {
-    console.log("new message arrived");
-  }, [messagesAppended]);
-
-  const addMessage = (msg) => {
-    console.log("message returne", msg);
-
-    setMessagesAppended([...messagesAppended, msg]);
-    console.log("useState", messagesAppended);
-  };
-
-  const onSubmit = (event) => {
-    event.preventDefault();
-    request
-      .post(`${url}/message`)
-      .set("Authorization", auth)
-      .send({ newMessage })
-      .then((res) => console.log("return message", res))
-      .catch((error) => {
-        console.log("error fetching messages");
-      });
-
-    socket.emit("chatmessage", { message: newMessage });
-  };
-
-  const onChange = (event) => {
-    setNewMessage({ message: event.target.value });
-  };*/
 
   const onChangeMessage = (event) => {
     message.current = event.target.value;
@@ -91,7 +63,7 @@ export const ChatRoomPage = () => {
   };
 
   return (
-    <div>
+    <div className="master">
       <h1>Welcome to room {location.state.roomName}</h1>
       <TextField
         id="outlined-basic"
@@ -100,10 +72,10 @@ export const ChatRoomPage = () => {
         name="message"
         onChange={onChangeMessage}
       />
-      <div>
+      <div className="container">
         {chatMessages.map((message) => {
           return (
-            <div>
+            <div className="message-container">
               <span>{message.username}: </span>
               <span>{message.message}</span>
             </div>
@@ -119,40 +91,6 @@ export const ChatRoomPage = () => {
       >
         Post Message
       </Button>
-      {/*       <div>
-        {messages.length > 0 ? (
-          messages.map((message) => {
-            return (
-              <div>
-                {message.username}: {message.message}
-              </div>
-            );
-          })
-        ) : (
-          <div>No messages</div>
-        )}
-        {messagesAppended.length > 0
-          ? messagesAppended.map((message) => {
-              return (
-                <div key={message.id}>
-                  {message.username}: {message.message}
-                </div>
-              );
-            })
-          : null}
-        <form className="signup-form" onSubmit={onSubmit}>
-          <input
-            className="sign-up-input"
-            name="message"
-            type="text"
-            onChange={onChange}
-            placeholder="Write your message here..."
-          />
-          <button className="signup-button" type="Submit">
-            Post Message
-          </button>
-        </form>
-      </div> */}
     </div>
   );
 };
