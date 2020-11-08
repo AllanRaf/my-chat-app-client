@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from "react";
 import { url } from "../App";
 import io from "socket.io-client";
 import * as request from "superagent";
-import { Grid, Paper } from "@material-ui/core";
+import { Button, Grid, Paper } from "@material-ui/core";
 import "./Lobby.css";
 import "../index.css";
 
@@ -42,7 +42,6 @@ export const Lobby = () => {
   };
 
   const addRoom = (newRoom) => {
-    console.log("all the chatrooms", chatrooms);
     const newRoomParsed = {
       roomName: newRoom.roomName,
       User: { username: newRoom.createdBy },
@@ -57,9 +56,26 @@ export const Lobby = () => {
       .post(`${url}/chatroom`)
       .set("Authorization", auth)
       .send({ roomName })
-      .then((res) => console.log("return message in lobby", res))
+      .then((res) => {
+        console.log("return message in lobby", res);
+        chatRoom.current = "";
+      })
       .catch((error) => {
         console.log("error fetching messages", error);
+      });
+  };
+
+  const handleOnJoinRoom = (roomId) => {
+    console.log("joining a chat room", roomId);
+    request
+      .post(`${url}/joinroom`)
+      .set("Authorization", auth)
+      .send({ roomId })
+      .then((res) => {
+        console.log("joined room");
+      })
+      .catch((error) => {
+        console.log("error joining room", error);
       });
   };
   return (
@@ -81,10 +97,37 @@ export const Lobby = () => {
       <Grid container spacing={5}>
         {chatrooms.map((chatroom) => {
           return (
-            <Grid item xl={3} l={3} m={6} xs={6}>
-              <Paper className="chatroom">
-                Room: {chatroom.roomName} created by:
-                {chatroom.User ? chatroom.User.username : "unknown"}
+            <Grid
+              item
+              xl={3}
+              lg={3}
+              sm={3}
+              xs={3}
+              className="chatroom-container"
+            >
+              <Paper className="chatroom-container">
+                <span className="chatroom-title">
+                  Room: {chatroom.roomName}
+                </span>
+                <span className="chatroom-creator">
+                  created by:
+                  {chatroom.User ? chatroom.User.username : "unknown"}
+                </span>
+                <span>
+                  <Button
+                    color="secondary"
+                    variant="contained"
+                    small
+                    className="button-add-room"
+                    onClick={() => {
+                      handleOnJoinRoom(chatroom.id);
+                    }}
+                  >
+                    <span className="button-add-room-text">
+                      Click to join chat room
+                    </span>
+                  </Button>
+                </span>
               </Paper>
             </Grid>
           );
