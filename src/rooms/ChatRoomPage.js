@@ -3,45 +3,40 @@ import * as request from "superagent";
 import io from "socket.io-client";
 import { url } from "../App";
 import { useLocation } from "react-router-dom";
+import { Button, TextField } from "@material-ui/core";
 
 export const ChatRoomPage = () => {
   const token = localStorage.getItem("token");
-  /*   const socket = io.connect(`${url}`);
-  const [messages, setMessages] = useState(["hello"]);
-  const [newMessage, setNewMessage] = useState({});
-
-  const [messagesAppended, setMessagesAppended] = useState([]); */
+  // const socket = io.connect(`${url}`);
 
   const auth = token ? `Bearer ${token}` : undefined;
 
   const location = useLocation();
 
   useEffect(() => {
-    console.log("you are in chatroom", location);
-  }, []);
-  /*   useEffect(() => {
     request
-      .get(`${url}/messages`)
+      .get(`${url}/messages/${location.state.roomId}`)
       .set("Authorization", auth)
       .then((res) => {
-        setMessages(res.body);
+        console.log("fetching messages");
+        //setMessages(res.body);
       })
       .catch((error) => {
         console.log("error fetching messages");
       });
 
-    socket.on("chatmessage", (msg) => {
+    /*     socket.on("chatmessage", (msg) => {
       addMessage(msg);
-    });
+    }); */
     //setMessages(() => messages.concat(newMessage));
 
-    return () => {
+    /*     return () => {
       socket.emit("disconnect");
       socket.off();
-    };
-  }, []); 
+    }; */
+  }, []);
 
-  useEffect(() => {
+  /* useEffect(() => {
     console.log("new message arrived");
   }, [messagesAppended]);
 
@@ -69,9 +64,32 @@ export const ChatRoomPage = () => {
   const onChange = (event) => {
     setNewMessage({ message: event.target.value });
   };*/
+
+  const handleSubmitMessage = () => {
+    console.log("handling submit message");
+    request
+      .post(`${url}/messages/${location.state.roomId}`)
+      .set("Authorization", auth)
+      .then((res) => {
+        console.log("fetching messages", res);
+        //setMessages(res.body);
+      })
+      .catch((error) => {
+        console.log("error fetching messages");
+      });
+  };
   return (
     <div>
       <h1>Welcome to room {location.state.roomName}</h1>
+
+      <Button
+        variant="contained"
+        color="primary"
+        type="submit"
+        onClick={handleSubmitMessage}
+      >
+        Log In
+      </Button>
       {/*       <div>
         {messages.length > 0 ? (
           messages.map((message) => {

@@ -22,7 +22,7 @@ export const Lobby = ({ history }) => {
         setChatrooms((prevRooms) => [...res.body]);
       })
       .catch((error) => {
-        console.log("error fetching messages");
+        console.log("error fetching chatrooms");
       });
 
     socket.on("chatrooms", (rooms) => {
@@ -73,7 +73,7 @@ export const Lobby = ({ history }) => {
       .send({ roomId })
       .then((res) => {
         console.log("joined room");
-        history.push({ pathname: "/chatroom", state: { roomId, roomName } });
+        history.replace({ pathname: "/chatroom", state: { roomId, roomName } });
       })
       .catch((error) => {
         console.log("error joining room", error);
