@@ -113,7 +113,7 @@ const styles = {
     borderWidth: "1px",
     borderRadius: "10px",
     borderStyle: "solid",
-    borderColor: "#66ff33",
+    borderColor: "#0066ff",
     flexDirection: "column",
   },
   background: {
