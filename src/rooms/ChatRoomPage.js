@@ -10,11 +10,9 @@ export const ChatRoomPage = () => {
   const token = localStorage.getItem("token");
   const socket = io.connect(`${url}`);
   const message = useRef("");
-
+  const myName = localStorage.getItem("name");
   const [chatMessages, setChatMessages] = useState([]);
-
   const auth = token ? `Bearer ${token}` : undefined;
-
   const location = useLocation();
 
   useEffect(() => {
@@ -22,8 +20,7 @@ export const ChatRoomPage = () => {
       .get(`${url}/messages/${location.state.roomId}`)
       .set("Authorization", auth)
       .then((res) => {
-        console.log("fetching messages", res);
-        // setMessages(res.body);
+        console.log("fetching messages");
       })
       .catch((error) => {
         console.log("error fetching messages");
@@ -33,7 +30,6 @@ export const ChatRoomPage = () => {
       console.log("new message coming through", msg);
       setChatMessages((prevMessages) => [...prevMessages, msg]);
     });
-    //setMessages(() => messages.concat(newMessage));
 
     return () => {
       socket.emit("disconnect");
@@ -63,8 +59,8 @@ export const ChatRoomPage = () => {
   };
 
   return (
-    <div className="master">
-      <h1>Welcome to room {location.state.roomName}</h1>
+    <div>
+      <h1 className="title">Welcome to room {location.state.roomName}</h1>
       <TextField
         id="outlined-basic"
         label="message"
@@ -72,12 +68,21 @@ export const ChatRoomPage = () => {
         name="message"
         onChange={onChangeMessage}
       />
-      <div className="container">
+      <div style={styles.messageContainer}>
         {chatMessages.map((message) => {
+          console.log("myName", myName, "other name", message.username);
+          console.log("message", message);
           return (
-            <div className="message-container">
+            <div
+              style={
+                myName === message.username
+                  ? styles.background
+                  : styles.otherBackground
+              }
+              key={message.messageId}
+            >
               <span>{message.username}: </span>
-              <span>{message.message}</span>
+              <span> {message.message}</span>
             </div>
           );
         })}
@@ -88,9 +93,45 @@ export const ChatRoomPage = () => {
         color="primary"
         type="submit"
         onClick={handleSubmitMessage}
+        className="button"
       >
         Post Message
       </Button>
     </div>
   );
+};
+
+const styles = {
+  messageContainer: {
+    display: "flex",
+    marginTop: "20px",
+    marginBottom: "20px",
+    marginLeft: "20px",
+    marginRight: "20px",
+    paddingLeft: "100px",
+    paddingRight: "100px",
+    borderWidth: "1px",
+    borderRadius: "10px",
+    borderStyle: "solid",
+    borderColor: "#0066ff",
+    flexDirection: "column",
+  },
+  background: {
+    display: "flex",
+    flex: 1,
+    backgroundColor: "#ffffff",
+    justifyContent: "flex-end",
+  },
+  otherBackground: {
+    display: "flex",
+    flex: 1,
+    backgroundColor: "#ffffff",
+    justifyContent: "flex-start",
+  },
+  myBackground: {
+    alignItems: "flex-end",
+  },
+  text: {
+    color: "#e3f2fd",
+  },
 };

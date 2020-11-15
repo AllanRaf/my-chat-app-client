@@ -43,7 +43,6 @@ export function HomePage({ history }) {
     <main>
       <div className="main-page">
         <h1 className="main-header">Hello to Allan's Chat Universe</h1>
-        <h2>Work in progress</h2>
         <form className="signup-form" onSubmit={onSubmit}>
           <div className="fields-container">
             <span className="field-input">

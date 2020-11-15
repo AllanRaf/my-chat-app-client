@@ -24,17 +24,6 @@ export const Lobby = ({ history }) => {
       .catch((error) => {
         console.log("error fetching chatrooms");
       });
-
-    /*     socket.on("chatrooms", (rooms) => {
-      console.log("chatrooms", rooms);
-
-      addRoom(rooms);
-    }); 
-
-    return () => {
-      socket.emit("disconnect");
-      socket.off();
-    };*/
   }, []);
 
   const onChange = (event) => {
@@ -118,7 +107,7 @@ export const Lobby = ({ history }) => {
                 </span>
                 <span>
                   <Button
-                    color="secondary"
+                    color="primary"
                     variant="contained"
                     small
                     className="button-add-room"
