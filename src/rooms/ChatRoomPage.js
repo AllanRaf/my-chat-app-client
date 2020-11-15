@@ -139,3 +139,38 @@ export const ChatRoomPage = () => {
     </div>
   );
 };
+
+const styles = {
+  messageContainer: {
+    display: "flex",
+    marginTop: "20px",
+    marginBottom: "20px",
+    marginLeft: "20px",
+    marginRight: "20px",
+    paddingLeft: "100px",
+    paddingRight: "100px",
+    borderWidth: "1px",
+    borderRadius: "10px",
+    borderStyle: "solid",
+    borderColor: "#66ff33",
+    flexDirection: "column",
+  },
+  background: {
+    display: "flex",
+    flex: 1,
+    backgroundColor: "#ffffff",
+    justifyContent: "flex-end",
+  },
+  otherBackground: {
+    display: "flex",
+    flex: 1,
+    backgroundColor: "#ffffff",
+    justifyContent: "flex-start",
+  },
+  myBackground: {
+    alignItems: "flex-end",
+  },
+  text: {
+    color: "#e3f2fd",
+  },
+};
