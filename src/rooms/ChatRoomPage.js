@@ -5,51 +5,14 @@ import { url } from "../App";
 import { useLocation } from "react-router-dom";
 import { Button, TextField } from "@material-ui/core";
 import "./ChatRoomPage.css";
-import { blue, red } from "@material-ui/core/colors";
-const styles = {
-  messageContainer: {
-    display: "flex",
-    marginTop: "20px",
-    marginBottom: "20px",
-    marginLeft: "20px",
-    marginRight: "20px",
-    paddingLeft: "100px",
-    paddingRight: "100px",
-    borderWidth: "1px",
-    borderRadius: "10px",
-    borderStyle: "solid",
-    borderColor: "#66ff33",
-    flexDirection: "column",
-    alignItems: "flex-end",
-  },
-  myMessage: {
-    alignItems: "flex-start",
-  },
-  background: {
-    backgroundColor: "#66ff33",
-  },
-  otherBackground: {
-    backgroundColor: "#f2f2f2",
-    alignItems: "flex-start",
-  },
-  myBackground: {
-    alignItems: "flex-end",
-  },
-  text: {
-    color: "#e3f2fd",
-  },
-};
 
 export const ChatRoomPage = () => {
   const token = localStorage.getItem("token");
   const socket = io.connect(`${url}`);
   const message = useRef("");
   const myName = localStorage.getItem("name");
-
   const [chatMessages, setChatMessages] = useState([]);
-
   const auth = token ? `Bearer ${token}` : undefined;
-
   const location = useLocation();
 
   useEffect(() => {
@@ -58,7 +21,6 @@ export const ChatRoomPage = () => {
       .set("Authorization", auth)
       .then((res) => {
         console.log("fetching messages");
-        //setMessages(res.body);
       })
       .catch((error) => {
         console.log("error fetching messages");
@@ -68,7 +30,6 @@ export const ChatRoomPage = () => {
       console.log("new message coming through", msg);
       setChatMessages((prevMessages) => [...prevMessages, msg]);
     });
-    //setMessages(() => messages.concat(newMessage));
 
     return () => {
       socket.emit("disconnect");
@@ -109,7 +70,7 @@ export const ChatRoomPage = () => {
       />
       <div style={styles.messageContainer}>
         {chatMessages.map((message) => {
-          console.log("myName", myName);
+          console.log("myName", myName, "other name", message.username);
           console.log("message", message);
           return (
             <div
@@ -121,7 +82,7 @@ export const ChatRoomPage = () => {
               key={message.messageId}
             >
               <span>{message.username}: </span>
-              <span className="message-username">{message.message}</span>
+              <span> {message.message}</span>
             </div>
           );
         })}
