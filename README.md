@@ -1,6 +1,8 @@
 ## About my-chat-app-client
 
-This project was built using creat-react-app and is the client side of a chat app where the user can sign up, create rooms, and join a chat room. It is used in conjunction with my-chat-app-server
+This project was built using creat-react-app and is the client side of a chat app where the user can sign up, create rooms, and join a chat room.
+
+It is used in conjunction with my-chat-app-server.
 
 ## Technologies used
 
