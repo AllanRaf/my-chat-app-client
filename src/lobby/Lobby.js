@@ -118,7 +118,7 @@ export const Lobby = ({ history }) => {
                 </span>
                 <span>
                   <Button
-                    color="secondary"
+                    color="primary"
                     variant="contained"
                     small
                     className="button-add-room"
