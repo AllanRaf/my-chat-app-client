@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import * as request from "superagent";
 import { Link } from "react-router-dom";
-import { Button, TextField } from "@material-ui/core";
-import { url } from "../App";
+import { Button } from "@material-ui/core";
+import { InputField } from "./components/InputField";
+import { login } from "../api-calls/ApiCalls";
 
 export function HomePage({ history }) {
   const [username, setUsername] = useState("");
@@ -23,21 +23,14 @@ export function HomePage({ history }) {
     setPassword(event.target.value);
   };
 
-  const onSubmit = (event) => {
-    event.preventDefault();
+  const onSubmit = async (event) => {
+    const response = await login(event, username, password);
 
-    request
-      .post(`${url}/login`)
-      .send({ email: username, password })
-      .then((res) => {
-        console.log(res.body);
-        localStorage.setItem("name", res.body.name);
-        localStorage.setItem("token", res.body.jwt);
-        history.push("/lobby");
-      })
-      .catch((error) => {
-        setError(true);
-      });
+    if (response === "SUCCESS") {
+      history.push("/lobby");
+    } else {
+      setError(true);
+    }
   };
   return (
     <main>
@@ -45,27 +38,19 @@ export function HomePage({ history }) {
         <h1 className="main-header">Hello to Allan's Chat Universe</h1>
         <form className="signup-form" onSubmit={onSubmit}>
           <div className="fields-container">
-            <span className="field-input">
-              <TextField
-                onFocus={resetError}
-                id="outlined-basic"
-                label="email"
-                variant="outlined"
-                name="email"
-                onChange={onChangeEmail}
-              />
-            </span>
-            <span className="field-input">
-              <TextField
-                onFocus={resetError}
-                //id="filled-password-input"
-                label="Password"
-                type="password"
-                onChange={onChangePassword}
-                variant="outlined"
-                className="field-input"
-              />
-            </span>
+            <InputField
+              onFocus={resetError}
+              onChange={onChangeEmail}
+              type="text"
+              label="email"
+            />
+
+            <InputField
+              onFocus={resetError}
+              onChange={onChangePassword}
+              type="Password"
+              label="password"
+            />
           </div>
           {error ? <div>email/password incorrect</div> : null}
 
@@ -76,9 +61,8 @@ export function HomePage({ history }) {
         <div className="main-secondary-text">
           <p>
             New user?
-            <Link to="/signup">
-              {" "}
-              <span className="main-sign-in">sign up</span>
+            <Link to="/signup" className="sign-up-link">
+              <span>sign up</span>
             </Link>
           </p>
         </div>

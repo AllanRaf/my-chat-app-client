@@ -28,22 +28,27 @@ code {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
 }
 
 .main-header {
+  display: flex;
   height: 50px;
   width: 100%;
   background-color: dodgerblue;
+  justify-content: center;
+  align-items: center;
 }
 
 .main-secondary-text {
   margin-top: 10px;
+  padding-left: 2rem;
 }
 
 .main-sign-in {
   font-weight: bold;
-  color: darkblue;
+  color: blue;
+  text-decoration: none;
 }
 
 .sign-up {
@@ -55,6 +60,7 @@ code {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  padding-left: 2rem;
 }
 
 .sign-up-input {
@@ -75,4 +81,15 @@ code {
 
 .field-input {
   margin-right: 10px;
+}
+
+.sign-up-link {
+  padding-left: 2px;
+  font-weight: bold;
+  color: blue;
+  text-decoration: none;
+}
+
+.sign-up-link:hover {
+  color: #fc0320;
 }
