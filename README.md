@@ -4,6 +4,8 @@ This project was built using creat-react-app and is the client side of a chat ap
 
 It is used in conjunction with my-chat-app-server.
 
+![chatpp](gifs/chat-app.gif)
+
 ## Technologies used
 
 - React, socket.io, React Hooks
