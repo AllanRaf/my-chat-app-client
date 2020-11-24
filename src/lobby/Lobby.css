@@ -8,7 +8,9 @@
 }
 
 .form-add-room {
+  display: flex;
   margin-bottom: 10px;
+  justify-content: center;
 }
 
 .chatroom-container {

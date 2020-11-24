@@ -1,29 +1,31 @@
 import React, { useRef, useEffect, useState } from "react";
 import { url } from "../App";
-import io from "socket.io-client";
+//import io from "socket.io-client";
 import * as request from "superagent";
 import { Button, Grid, Paper } from "@material-ui/core";
+import { getRooms, addChatRoom } from "../api-calls/ApiCalls";
 import "./Lobby.css";
-import "../index.css";
 
 export const Lobby = ({ history }) => {
   const token = localStorage.getItem("token");
-  const socket = io.connect(`${url}`);
+  //const socket = io.connect(`${url}`);
   const chatRoom = useRef("");
   const auth = token ? `Bearer ${token}` : undefined;
   const [chatrooms, setChatrooms] = useState([{}]);
 
+  const setRoomsOnPage = async () => {
+    const response = await getRooms();
+
+    if (response !== "ERROR") {
+      console.log("response in lobby", response);
+      setChatrooms((prevRooms) => [...response]);
+    } else {
+      console.log("Error with fetching rooms");
+    }
+  };
+
   useEffect(() => {
-    request
-      .get(`${url}/chatrooms`)
-      .set("Authorization", auth)
-      .then((res) => {
-        console.log("the chatrooms are", res);
-        setChatrooms((prevRooms) => [...res.body]);
-      })
-      .catch((error) => {
-        console.log("error fetching chatrooms");
-      });
+    setRoomsOnPage();
   }, []);
 
   const onChange = (event) => {
@@ -39,21 +41,16 @@ export const Lobby = ({ history }) => {
     };
     setChatrooms((prevRooms) => [...prevRooms, newRoomParsed]);
   };
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     console.log("ref", chatRoom.current);
     const roomName = chatRoom.current;
-    event.preventDefault();
-    request
-      .post(`${url}/chatroom`)
-      .set("Authorization", auth)
-      .send({ roomName })
-      .then((res) => {
-        console.log("return message in lobby", res);
-        chatRoom.current = "";
-      })
-      .catch((error) => {
-        console.log("error fetching messages", error);
-      });
+
+    try {
+      const chatroomAdded = await addChatRoom(event, roomName);
+      console.log("chatroom added", chatroomAdded.body);
+    } catch {
+      console.log("error with adding chatroom");
+    }
   };
 
   const handleOnJoinRoom = (roomId, roomName) => {
